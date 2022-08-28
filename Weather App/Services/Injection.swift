@@ -42,7 +42,8 @@ final class Injection {
     }
 }
 
-@propertyWrapper struct Injected<T> {
+@propertyWrapper
+struct Inject<T> {
     let wrappedValue: T
     
     init() {

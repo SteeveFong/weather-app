@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 final class WeatherViewModel: ViewModelStateProtocol, ObservableObject {
-    @Injected private var apiManager: ApiManager
+    @Inject private var apiManager: ApiManager
     
     @Published var state: ViewModelState = .none
     @Published var currentWeather: Weather?
@@ -35,4 +35,6 @@ final class WeatherViewModel: ViewModelStateProtocol, ObservableObject {
                 }
             }.store(in: &cancellableSet)
     }
+    
+    public init () {}
 }

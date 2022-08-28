@@ -25,7 +25,7 @@ enum WeatherConditionType {
     }
 }
 
-struct WeatherCondition: Decodable {
+struct WeatherCondition: Decodable, Equatable {
     let id: Int
     let main: String
     let description: String
@@ -79,4 +79,8 @@ extension WeatherCondition {
         
         return NSLocalizedString(localizedStringKey, comment: "Simplify Weather condition")
     }
+}
+
+func ==(lhs: WeatherCondition, rhs: WeatherCondition) -> Bool {
+    return lhs.id == rhs.id
 }

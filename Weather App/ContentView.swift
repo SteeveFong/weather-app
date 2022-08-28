@@ -11,7 +11,7 @@ import Combine
 struct ContentView: View {
     @State var cancellables: Set<AnyCancellable> = []
     
-    @Injected private var locationManager: LocationManager
+    @Inject private var locationManager: LocationManager
     @ObservedObject var weatherViewModel = WeatherViewModel()
     @ObservedObject var weatherForecastViewModel = WeatherForecastViewModel()
     

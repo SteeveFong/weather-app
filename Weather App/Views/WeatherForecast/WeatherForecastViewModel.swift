@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 final class WeatherForecastViewModel: ViewModelStateProtocol, ObservableObject {
-    @Injected private var apiManager: ApiManager
+    @Inject private var apiManager: ApiManager
     
     @Published var state: ViewModelState = .none
     @Published var weatherForecasts: [WeatherDaily]?
@@ -50,7 +50,7 @@ final class WeatherForecastViewModel: ViewModelStateProtocol, ObservableObject {
             }
         }
         
-        // quick fix, return only 5 days forecast
+        // quick fix, return only last 5 days forecast
         if results.count > 5 {
             return results.suffix(5)
         }

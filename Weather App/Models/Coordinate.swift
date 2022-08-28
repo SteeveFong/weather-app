@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Coordinate: Decodable {
+struct Coordinate: Decodable, Equatable {
     let longitude: Double
     let latitude: Double
     
@@ -15,4 +15,9 @@ struct Coordinate: Decodable {
         case longitude = "lon"
         case latitude = "lat"
     }
+}
+
+func ==(lhs: Coordinate, rhs: Coordinate) -> Bool {
+    return lhs.longitude == rhs.longitude
+    && lhs.latitude == rhs.latitude
 }

@@ -32,8 +32,9 @@ struct WeatherForecastRow: View {
     }
 }
 
-//struct WeatherForecastRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WeatherForecastRow(weather: Binding<)
-//    }
-//}
+struct WeatherForecastRow_Previews: PreviewProvider {
+    static var previews: some View {
+        let weather = WeatherDaily(date: .now, conditionIcon: Image("rainIcon"), temperature: 32)
+        WeatherForecastRow(weather: weather)
+    }
+}

@@ -1,0 +1,21 @@
+name: Weather App Test Coverage
+
+on:
+  push:
+    branches:
+main
+  pull_request:
+    branches:
+main
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    steps:
+      - name: Test
+        uses: actions/checkout@v1
+      - name: Build and Test
+        run:  xcodebuild test -project 'Weather App.xcodeproj' -scheme 'Weather App' -destination 'platform=iOS Simulator,name=iPhone 11,OS=15.4' build test
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.2.1
+

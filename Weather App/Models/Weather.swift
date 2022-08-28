@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Weather: Decodable {
+struct Weather: Decodable, Equatable {
     let name: String?
     let datetime: Date
     let coordinate: Coordinate?
@@ -35,4 +35,11 @@ struct Weather: Decodable {
         temperature = try container.decode(Temperature.self, forKey: .temperature)
         weatherConditions = try container.decode([WeatherCondition].self, forKey: .weatherConditions)
     }
+}
+
+func ==(lhs: Weather, rhs: Weather) -> Bool {
+    return lhs.name == rhs.name
+    && lhs.datetime == rhs.datetime
+    && lhs.temperature == rhs.temperature
+    && lhs.coordinate == rhs.coordinate
 }
