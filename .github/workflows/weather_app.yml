@@ -12,14 +12,9 @@ jobs:
   build:
     runs-on: macOS-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: futureware-tech/simulator-action@v1
-        with:
-          model: 'iPhone 11'
       - name: Test
         uses: actions/checkout@v1
       - name: Build and Test
-        run:  xcodebuild test -project 'Weather App.xcodeproj' -scheme 'Weather App' -destination 'name=iPhone 11' build test
+        run:  xcodebuild test -project 'Weather App.xcodeproj' -scheme 'Weather App' -destination 'platform=iOS Simulator,name=iPhone 11,OS=14.3' build test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.2.1
-
