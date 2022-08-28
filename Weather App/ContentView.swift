@@ -11,8 +11,9 @@ import Combine
 struct ContentView: View {
     @State var cancellables: Set<AnyCancellable> = []
     
-    @ObservedObject var locationManager = LocationManager()
+    @Injected private var locationManager: LocationManager
     @ObservedObject var weatherViewModel = WeatherViewModel()
+    @ObservedObject var weatherForecastViewModel = WeatherForecastViewModel()
     
     var body: some View {
         ZStack {
@@ -22,23 +23,29 @@ struct ContentView: View {
             switch weatherViewModel.state {
             case.loaded:
                 
-                VStack {
+                VStack(spacing: 0) {
                     ZStack {
                         WeatherView()
                     }
                     
+                    Divider()
+                        .frame(height: 2)
+                        .overlay(.white)
+                    
+                    WeatherForecastView()
+
                     Spacer()
                 }
                 
             default:
-                Text("Loading").foregroundColor(.white)
+                Text(NSLocalizedString("LOADING", comment: "")).foregroundColor(.white)
             }
             
         }.onAppear {
             locationManager.authorizationStatus
                 .receive(on: DispatchQueue.main)
                 .sink { completion in
-                    print("handle \(completion) for error and finished completion")
+                    print("TODO handle \(completion) for error and finished completion")
                 } receiveValue: { status in
                     switch status {
                     case .denied, .notDetermined, .restricted:
@@ -52,15 +59,17 @@ struct ContentView: View {
                 .receive(on: DispatchQueue.main)
                 .first(where: { $0 != nil })
                 .sink { completion in
-                    print("handle \(completion) for error and finished completion")
+                    print("TODO handle \(completion) for error and finished completion")
                 } receiveValue: { coordinate in
                     if let safeCoordinate = coordinate {
                         locationManager.stopUpdatingLocation()
                         self.weatherViewModel.getCurrentWeather(coordinate: safeCoordinate)
+                        self.weatherForecastViewModel.getWeatherForecast(coordinate: safeCoordinate)
                     }
                 }.store(in: &cancellables)
             
         }.environmentObject(weatherViewModel)
+            .environmentObject(weatherForecastViewModel)
     }
 }
 

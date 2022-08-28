@@ -1,3 +1,7 @@
+"LOADING" = "Loading...";
 "RAINY" = "Rainy";
 "CLOUDY" = "Cloudy";
 "SUNNY" = "Sunny";
+"CURRENT" = "current";
+"MIN" = "min";
+"MAX" = "max";

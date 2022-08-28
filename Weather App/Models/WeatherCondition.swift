@@ -54,6 +54,17 @@ extension WeatherCondition {
         }
     }
     
+    var icon: Image {
+        switch conditionType {
+        case .rainy:
+            return Image("rainyIcon")
+        case .sunny:
+            return Image("sunnyIcon")
+        default:
+            return Image("partlySunnyIcon")
+        }
+    }
+    
     var label: String {
         var localizedStringKey: String
         

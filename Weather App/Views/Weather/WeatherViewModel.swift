@@ -8,19 +8,15 @@
 import Combine
 import Foundation
 import CoreLocation
-import UIKit
 
-final class WeatherViewModel: ObservableObject {
-    @Published var state: ApiState = .none
+final class WeatherViewModel: ViewModelStateProtocol, ObservableObject {
+    @Injected private var apiManager: ApiManager
+    
+    @Published var state: ViewModelState = .none
     @Published var currentWeather: Weather?
     @Published var weatherColor = WeatherConditionType.cloudy.namedColor
     
-    private let apiManager: ApiManager
     private var cancellableSet: Set<AnyCancellable> = []
-    
-    init(apiManager: ApiManager = ApiManager.shared) {
-        self.apiManager = apiManager
-    }
     
     func getCurrentWeather(coordinate: CLLocationCoordinate2D) {
         state = .isLoading

@@ -10,16 +10,7 @@ import Alamofire
 import Combine
 import CoreLocation
 
-enum ApiState {
-    case none
-    case loaded
-    case isLoading
-    case error(title: String?, description: String?)
-}
-
-class ApiManager {
-    static let shared = ApiManager()
-    
+class ApiManager {    
     let sessionManager: Session = {
         var eventMonitors = [EventMonitor]()
         let config = URLSessionConfiguration.af.default
@@ -39,6 +30,16 @@ class ApiManager {
             .request(ApiRouter.currentWeather(coordinate: coordinate))
             .validate()
             .publishDecodable(type: Weather.self)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func getWeatherForecast(coordinate: CLLocationCoordinate2D) -> AnyPublisher<DataResponse<WeatherForecast, AFError>, Never> {
+
+        return sessionManager
+            .request(ApiRouter.weatherForecast(coordinate: coordinate))
+            .validate()
+            .publishDecodable(type: WeatherForecast.self)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }

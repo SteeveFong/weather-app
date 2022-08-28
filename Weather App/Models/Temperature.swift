@@ -9,8 +9,8 @@ import Foundation
 
 struct Temperature: Decodable {
     let current: Double
-    let minimum: Double
-    let maximum: Double
+    let minimum: Double?
+    let maximum: Double?
     
     enum CodingKeys: String, CodingKey {
         case current = "temp"

@@ -11,7 +11,7 @@ import CoreLocation
 
 enum ApiRouter {
     case currentWeather(coordinate: CLLocationCoordinate2D)
-    case weatherForcast(coordinate: CLLocationCoordinate2D)
+    case weatherForecast(coordinate: CLLocationCoordinate2D)
     
     var baseUrl: String {
         switch self {
@@ -40,14 +40,14 @@ enum ApiRouter {
         switch self {
         case .currentWeather:
             return "/weather"
-        case .weatherForcast:
-            return "/forcast"
+        case .weatherForecast:
+            return "/forecast"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .currentWeather, .weatherForcast:
+        case .currentWeather, .weatherForecast:
             return .get
         }
     }
@@ -59,7 +59,7 @@ enum ApiRouter {
                 "lat": "\(coordinate.latitude)",
                 "lon": "\(coordinate.longitude)"
             ]
-        case .weatherForcast(let coordinate):
+        case .weatherForecast(let coordinate):
             return [
                 "lat": "\(coordinate.latitude)",
                 "lon": "\(coordinate.longitude)"

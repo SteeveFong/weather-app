@@ -12,6 +12,12 @@ struct Weather_AppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .preferredColorScheme(.dark)
+                .onAppear {
+                    UITableView.appearance().separatorStyle = .none
+                    UITableViewCell.appearance().backgroundColor = .clear
+                    UITableView.appearance().backgroundColor = .clear
+                }
         }
     }
 }
