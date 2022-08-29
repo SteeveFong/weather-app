@@ -6,4 +6,7 @@
 "MIN" = "min";
 "MAX" = "max";
 "SEARCH_LOCATION" = "Search a location";
-"WEATHER_FAVORITES" = "Weather favorite list";
+"WEATHER_FAVORITES" = "Favorite regions";
+"NO_DATA_FOUND" = "No data found";
+"OK" = "OK";
+"LOCATION_PERMISSION_DENIED" = "Please go to settings and activate location for the Weather App";

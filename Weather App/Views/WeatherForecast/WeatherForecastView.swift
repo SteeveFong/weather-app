@@ -19,7 +19,7 @@ struct WeatherForecastView: View {
                     WeatherForecastRow(weather: weather)
                 }
             }
-            .padding(EdgeInsets(top: margin, leading: margin, bottom: margin, trailing: margin))
+            .padding(EdgeInsets(top: margin, leading: margin, bottom: margin * 10, trailing: margin))
         }
         .frame(height: UIScreen.main.bounds.height / 2)
     }

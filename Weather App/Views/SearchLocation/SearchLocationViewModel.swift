@@ -27,7 +27,7 @@ final class SearchLocationViewModel: ViewModelStateProtocol, ObservableObject {
                     self?.state = .loaded
                     self?.predictions = dataResponse.value?.predictions
                 } else {
-                    self?.state = .error(title: "tset", description: "awfewef")
+                    self?.state = .error(WeatherError.noDataError.alertItem)
                 }
             }.store(in: &cancellableSet)
     }
@@ -42,7 +42,7 @@ final class SearchLocationViewModel: ViewModelStateProtocol, ObservableObject {
                     
                     success(dataResponse.value)
                 } else {
-                    self?.state = .error(title: "tset", description: "awfewef")
+                    self?.state = .error(WeatherError.noDataError.alertItem)
                 }
             }.store(in: &cancellableSet)
     }

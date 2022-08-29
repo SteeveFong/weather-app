@@ -51,7 +51,7 @@ struct ContentView: View {
                     } receiveValue: { status in
                         switch status {
                         case .denied, .notDetermined, .restricted:
-                            break
+                            alertItem = WeatherError.locationPermissionDenied.alertItem
                         default:
                             break
                         }
@@ -71,14 +71,8 @@ struct ContentView: View {
                     }.store(in: &cancellables)
                 
                 switch weatherForecastViewModel.state {
-                case let .error(title, description):
-                    alertItem = AlertItem(
-                        title: Text(title ?? ""),
-                        description: Text(description ?? ""),
-                        primaryButton: .default(Text(""), action: {
-                            
-                        })
-                    )
+                case .error(let item):
+                    alertItem = item
                 default:
                     break
                 }

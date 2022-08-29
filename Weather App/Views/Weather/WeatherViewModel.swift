@@ -42,7 +42,7 @@ final class WeatherViewModel: ViewModelStateProtocol, ObservableObject {
                         })
                     }
                 } else {
-                    self?.state = .error(title: "tset", description: "awfewef")
+                    self?.state = .error(WeatherError.noDataError.alertItem)
                 }
             }.store(in: &cancellableSet)
     }

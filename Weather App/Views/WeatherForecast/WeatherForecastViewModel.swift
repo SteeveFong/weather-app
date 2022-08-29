@@ -26,7 +26,7 @@ final class WeatherForecastViewModel: ViewModelStateProtocol, ObservableObject {
                     self?.state = .loaded
                     self?.weatherForecasts = self?.reduceToDailyForecast(data: dataResponse.value)
                 } else {
-                    self?.state = .error(title: "tset", description: "awfewef")
+                    self?.state = .error(WeatherError.noDataError.alertItem)
                 }
             }.store(in: &cancellableSet)
     }
