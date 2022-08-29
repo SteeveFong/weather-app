@@ -13,12 +13,15 @@ struct WeatherForecastView: View {
     let margin = 14.0
     
     var body: some View {
-        VStack {
-            ForEach(weatherForecastViewModel.weatherForecasts ?? [], id: \.date) { weather in
-                WeatherForecastRow(weather: weather)
+        ScrollView(showsIndicators: false) {
+            VStack {
+                ForEach(weatherForecastViewModel.weatherForecasts ?? [], id: \.date) { weather in
+                    WeatherForecastRow(weather: weather)
+                }
             }
+            .padding(EdgeInsets(top: margin, leading: margin, bottom: margin * 10, trailing: margin))
         }
-        .padding(EdgeInsets(top: margin, leading: margin, bottom: margin, trailing: margin))
+        .frame(height: UIScreen.main.bounds.height / 2)
     }
 }
 

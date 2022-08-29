@@ -25,7 +25,7 @@ enum WeatherConditionType {
     }
 }
 
-struct WeatherCondition: Decodable, Equatable {
+struct WeatherCondition: Codable, Equatable {
     let id: Int
     let main: String
     let description: String
@@ -57,9 +57,9 @@ extension WeatherCondition {
     var icon: Image {
         switch conditionType {
         case .rainy:
-            return Image("rainyIcon")
+            return Image("rainIcon")
         case .sunny:
-            return Image("sunnyIcon")
+            return Image("clearIcon")
         default:
             return Image("partlySunnyIcon")
         }

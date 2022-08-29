@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Google Places Api Key</key>
+	<string>AIzaSyB32TGa6QpTiYpjwRJNJo10ZIXI1oihVG8</string>
 	<key>Open Weather Api Key</key>
 	<string>130f4a70cc97c869f11bded41593b5fa</string>
 </dict>

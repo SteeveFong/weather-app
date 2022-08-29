@@ -11,7 +11,7 @@ enum ViewModelState {
     case none
     case loaded
     case isLoading
-    case error(title: String?, description: String?)
+    case error(_ item: AlertItem)
 }
 
 protocol ViewModelStateProtocol {

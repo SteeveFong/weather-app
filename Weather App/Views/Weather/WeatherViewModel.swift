@@ -11,6 +11,7 @@ import CoreLocation
 
 final class WeatherViewModel: ViewModelStateProtocol, ObservableObject {
     @Inject private var apiManager: ApiManager
+    @Inject private var favoritedWeatherStore: FavoritedWeatherStore
     
     @Published var state: ViewModelState = .none
     @Published var currentWeather: Weather?
@@ -27,13 +28,44 @@ final class WeatherViewModel: ViewModelStateProtocol, ObservableObject {
                     self?.state = .loaded
                     self?.currentWeather = dataResponse.value
                     
-                    if let color = dataResponse.value?.weatherConditions.first?.conditionType.namedColor {
+                    if let weather = dataResponse.value,
+                        let color = weather.weatherConditions.first?.conditionType.namedColor {
+                        
                         self?.weatherColor = color
-                    }                    
+                        self?.favoritedWeatherStore.exists(weather: weather, completion: { result in
+                            switch result {
+                            case .success(_):
+                                self?.currentWeather?.isFavorited = true
+                            case .failure(_):
+                                break
+                            }
+                        })
+                    }
                 } else {
-                    self?.state = .error(title: "tset", description: "awfewef")
+                    self?.state = .error(WeatherError.noDataError.alertItem)
                 }
             }.store(in: &cancellableSet)
+    }
+    
+    func toggleFavorite() {
+        guard let safeCurrentWeather = currentWeather else { return }
+        
+        favoritedWeatherStore.exists(weather: safeCurrentWeather) { [weak self] result in
+            guard let strongSelf = self else { return }
+
+            switch result {
+            case .success(let index):
+                strongSelf.favoritedWeatherStore.remove(atIndex: index) { _ in
+                    self?.currentWeather?.isFavorited = false
+                }
+            case .failure(let error):
+                if error == .noDataError {
+                    strongSelf.favoritedWeatherStore.save(weather: safeCurrentWeather) { _ in
+                        self?.currentWeather?.isFavorited = true
+                    }
+                }
+            }
+        }
     }
     
     public init () {}

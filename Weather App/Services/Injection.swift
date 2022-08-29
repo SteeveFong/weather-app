@@ -38,6 +38,10 @@ final class Injection {
             return ApiManager()
         }
         
+        container.register(FavoritedWeatherStore.self) { _ in
+            return FavoritedWeatherStore()
+        }
+        
         return container
     }
 }

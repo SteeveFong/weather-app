@@ -11,11 +11,13 @@ import Combine
 import CoreLocation
 
 protocol ApiManagerProtocol {
+    func getPlaceDetails(placeId: String) -> AnyPublisher<DataResponse<PlaceDetails, AFError>, Never>
+    func getPlaceAutocomplete(query: String) -> AnyPublisher<DataResponse<PlaceAutocomplete, AFError>, Never>
     func getCurrentWeather(coordinate: CLLocationCoordinate2D) -> AnyPublisher<DataResponse<Weather, AFError>, Never>
     func getWeatherForecast(coordinate: CLLocationCoordinate2D) -> AnyPublisher<DataResponse<WeatherForecast, AFError>, Never>
 }
 
-class ApiManager: ApiManagerProtocol {    
+class ApiManager: ApiManagerProtocol {
     let sessionManager: Session = {
         var eventMonitors = [EventMonitor]()
         let config = URLSessionConfiguration.af.default
@@ -28,6 +30,24 @@ class ApiManager: ApiManagerProtocol {
         
         return Session(configuration: config, eventMonitors: eventMonitors)
     }()
+    
+    func getPlaceDetails(placeId: String) -> AnyPublisher<DataResponse<PlaceDetails, AFError>, Never>  {
+        return sessionManager
+            .request(ApiRouter.placeDetails(placeId: placeId))
+            .validate()
+            .publishDecodable(type: PlaceDetails.self)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func getPlaceAutocomplete(query: String) -> AnyPublisher<DataResponse<PlaceAutocomplete, AFError>, Never>  {
+        return sessionManager
+            .request(ApiRouter.placeAutocomplete(query: query))
+            .validate()
+            .publishDecodable(type: PlaceAutocomplete.self)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
     
     func getCurrentWeather(coordinate: CLLocationCoordinate2D) -> AnyPublisher<DataResponse<Weather, AFError>, Never> {
 

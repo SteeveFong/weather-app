@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Temperature: Decodable, Equatable {
+struct Temperature: Codable, Equatable {
     let current: Double
     let minimum: Double?
     let maximum: Double?
