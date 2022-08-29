@@ -47,3 +47,6 @@ jobs:
       - name: Run Tests (Cache)
         if: steps.setup.outputs.cache-hit == 'true'
         run: bundle exec fastlane unit_test skip_package_dependencies_resolution:true
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.2.1
