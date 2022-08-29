@@ -13,10 +13,8 @@ jobs:
     runs-on: macOS-latest
     steps:
       - name: Unit Test
-        env:
-          DEVICE: "iPhone 11"
         uses: actions/checkout@v1
       - name: Build and Test
-        run:  xcodebuild test -project 'Weather App.xcodeproj' -scheme 'Weather App' -destination 'platform=iOS Simulator,name=$DEVICE' build test
+        run:  xcodebuild test -project 'Weather App.xcodeproj' -scheme 'Weather App' -destination 'platform=iOS Simulator,name=iPhone 13' build test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.2.1
