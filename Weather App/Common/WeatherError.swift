@@ -22,7 +22,11 @@ extension WeatherError {
         case .locationPermissionDenied:
             return AlertItem(
                 description: Text(NSLocalizedString("LOCATION_PERMISSION_DENIED", comment: "")),
-                primaryButton: .default(Text(NSLocalizedString("OK", comment: ""))))
+                primaryButton: .default(Text(NSLocalizedString("OK", comment: "")), action: {
+                    if let url = URL(string:UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                }))
         }
     }
 }

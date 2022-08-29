@@ -43,7 +43,9 @@ extension LocationManager: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        self.authorizationStatus.send(status)
+        DispatchQueue.main.async {
+            self.authorizationStatus.send(status)
+        }
         
         switch status {
         case .denied, .notDetermined, .restricted:
