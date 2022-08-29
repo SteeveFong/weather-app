@@ -10,54 +10,56 @@ import SwiftUI
 struct WeatherView: View {
     @EnvironmentObject var weatherViewModel: WeatherViewModel
     
+    let containerHeight = UIScreen.main.bounds.height / 3
+    
     var body: some View {
         VStack(spacing: 0) {
-            ZStack {
-                weatherViewModel.currentWeather?
-                    .weatherConditions
-                    .first?
-                    .image
-                    .resizable()
-                    .frame(minHeight: (UIScreen.main.bounds.height / 3) + UIApplication.shared.safeAreaInsets.top)
-                    .scaledToFill()
+            
+            weatherViewModel.currentWeather?
+                .weatherConditions
+                .first?
+                .image
+                .resizable()
+                .frame(width: UIScreen.main.bounds.width)
+                .scaledToFill()
+                .overlay(
+                    VStack(spacing: 0) {
+                        Text(weatherViewModel.currentWeather?.name ?? "")
+                            .foregroundColor(.white)
+                            .font(.system(size: TextSize.normal.value))
 
-                VStack(spacing: 0) {
-                    Text(weatherViewModel.currentWeather?.name ?? "")
-                        .foregroundColor(.white)
-                        .font(.system(size: TextSize.normal.value))
-                    
-                    Text.temperatureLabel(
-                        degreesCelsius: weatherViewModel.currentWeather?.temperature.current,
-                        size: .large)
-                    .offset(x: 18)
-                    
-                    Text(weatherViewModel.currentWeather?.weatherConditions.first?.label.uppercased() ?? "")
-                        .foregroundColor(.white)
-                        .font(.system(size: TextSize.normal.value))
+                        Text.temperatureLabel(
+                            degreesCelsius: weatherViewModel.currentWeather?.temperature.current,
+                            size: .large)
+                        .offset(x: 16)
 
-                }
-                .offset(y: -18)
-            }
-            .edgesIgnoringSafeArea(.top)
+                        Text(weatherViewModel.currentWeather?.weatherConditions.first?.label.uppercased() ?? "")
+                            .foregroundColor(.white)
+                            .font(.system(size: TextSize.normal.value))
+
+                    }
+                    .offset(y: -18)
+                )
             
             HStack {
                 TemperatureStack(
                     subtitle: NSLocalizedString("MIN", comment: ""),
                     temperature: weatherViewModel.currentWeather?.temperature.minimum
                 )
-                
+
                 TemperatureStack(
                     subtitle: NSLocalizedString("CURRENT", comment: ""),
                     temperature: weatherViewModel.currentWeather?.temperature.current
                 )
-                
+
                 TemperatureStack(
                     subtitle: NSLocalizedString("MAX", comment: ""),
                     temperature: weatherViewModel.currentWeather?.temperature.maximum
                 )
             }
-            .frame(height: 64)
+            .frame(height: 58)
         }
+        .edgesIgnoringSafeArea(.top)
     }
 }
 

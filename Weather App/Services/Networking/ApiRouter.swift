@@ -10,24 +10,34 @@ import Alamofire
 import CoreLocation
 
 enum ApiRouter {
+    case placeDetails(placeId: String)
+    case placeAutocomplete(query: String)
     case currentWeather(coordinate: CLLocationCoordinate2D)
     case weatherForecast(coordinate: CLLocationCoordinate2D)
     
     var baseUrl: String {
         switch self {
+        case .placeDetails, .placeAutocomplete:
+            return "https://maps.googleapis.com/maps/api"
         default:
             return "https://api.openweathermap.org/data/2.5"
         }
     }
     
     var apiKey: String {
+        guard let filePath = Bundle.main.path(forResource: "APIKey-info", ofType: "plist") else {
+            fatalError("Couldn't find file 'APIKey-info.plist'")
+        }
+        let plist = NSDictionary(contentsOfFile: filePath)
+        
         switch self {
-        default:
-            guard let filePath = Bundle.main.path(forResource: "APIKey-info", ofType: "plist") else {
-                fatalError("Couldn't find file 'APIKey-info.plist'")
+        case .placeDetails, .placeAutocomplete:
+            guard let value = plist?.object(forKey: "Google Places Api Key") as? String else {
+                fatalError("Couldn't find key 'Google Places Api Key' in 'APIKey-info.plist'")
             }
-            let plist = NSDictionary(contentsOfFile: filePath)
             
+            return value
+        default:
             guard let value = plist?.object(forKey: "Open Weather Api Key") as? String else {
                 fatalError("Couldn't find key 'Open Weather Api Key' in 'APIKey-info.plist'")
             }
@@ -38,6 +48,10 @@ enum ApiRouter {
     
     var path: String {
         switch self {
+        case .placeDetails:
+            return "/place/details/json"
+        case .placeAutocomplete:
+            return "/place/autocomplete/json"
         case .currentWeather:
             return "/weather"
         case .weatherForecast:
@@ -47,13 +61,23 @@ enum ApiRouter {
     
     var method: HTTPMethod {
         switch self {
-        case .currentWeather, .weatherForecast:
+        case .placeDetails, .placeAutocomplete, .currentWeather, .weatherForecast:
             return .get
         }
     }
     
     var parameters: [String: String]? {
         switch self {
+        case .placeDetails(let placeId):
+            return [
+                "fields": "geometry",
+                "place_id": placeId
+            ]
+        case .placeAutocomplete(let query):
+            return [
+                "input": query,
+                "types": "(cities)"
+            ]
         case .currentWeather(let coordinate):
             return [
                 "lat": "\(coordinate.latitude)",
@@ -69,6 +93,10 @@ enum ApiRouter {
     
     var defaultParameters: [String: String]? {
         switch self {
+        case .placeDetails, .placeAutocomplete:
+            return [
+                "key": apiKey
+            ]
         default:
             return [
                 "appid": apiKey,

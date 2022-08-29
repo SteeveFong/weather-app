@@ -8,12 +8,14 @@
 import Foundation
 import SwiftUI
 
-struct Weather: Decodable, Equatable {
+struct Weather: Codable, Equatable {
     let name: String?
     let datetime: Date
     let coordinate: Coordinate?
     let temperature: Temperature
     let weatherConditions: [WeatherCondition]
+    
+    var isFavorited = false
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -39,7 +41,4 @@ struct Weather: Decodable, Equatable {
 
 func ==(lhs: Weather, rhs: Weather) -> Bool {
     return lhs.name == rhs.name
-    && lhs.datetime == rhs.datetime
-    && lhs.temperature == rhs.temperature
-    && lhs.coordinate == rhs.coordinate
 }

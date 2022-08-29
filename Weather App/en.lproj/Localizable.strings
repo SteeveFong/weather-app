@@ -5,3 +5,5 @@
 "CURRENT" = "current";
 "MIN" = "min";
 "MAX" = "max";
+"SEARCH_LOCATION" = "Search a location";
+"WEATHER_FAVORITES" = "Weather favorite list";
