@@ -7,14 +7,23 @@
 
 import Foundation
 
-class Store<T: Codable> {
+protocol StoreProtocol {
+    associatedtype T
+    
+    func load(completion: @escaping (Result<[T], Error>) -> Void)
+    func save(item: T, completion: @escaping (Result<Int, Error>) -> Void)
+    func save(items: [T], completion: @escaping (Result<Int, Error>) -> Void)
+    func remove(atIndex index: Int, completion: @escaping (Result<Int, Error>) -> Void)
+}
+
+class Store<T: Codable>: StoreProtocol {
     private let path: String
     
     init(path: String) {
         self.path = path
     }
     
-    func fileURL() throws -> URL {
+    private func fileURL() throws -> URL {
         try FileManager
             .default
             .url(for: .documentDirectory,

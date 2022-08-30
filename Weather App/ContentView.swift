@@ -17,7 +17,7 @@ struct ContentView: View {
     @State var isFavoriteScreenPresented = false
     @State var alertItem: AlertItem?
     
-    @Inject private var locationManager: LocationManager
+    @Inject private var locationManager: LocationManagerProtocol
     @ObservedObject var weatherViewModel = WeatherViewModel()
     @ObservedObject var weatherForecastViewModel = WeatherForecastViewModel()
 

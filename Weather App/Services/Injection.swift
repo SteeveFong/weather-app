@@ -30,15 +30,15 @@ final class Injection {
     private func buildContainer() -> Container {
         let container = Container()
         
-        container.register(LocationManager.self) { _ in
+        container.register(LocationManagerProtocol.self) { _ in
             return LocationManager()
         }
         
-        container.register(ApiManager.self) { _ in
+        container.register(ApiManagerProtocol.self) { _ in
             return ApiManager()
         }
         
-        container.register(FavoritedWeatherStore.self) { _ in
+        container.register(FavoritedWeatherStoreProtocol.self) { _ in
             return FavoritedWeatherStore()
         }
         

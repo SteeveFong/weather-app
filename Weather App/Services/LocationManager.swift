@@ -9,7 +9,15 @@ import Combine
 import Foundation
 import CoreLocation
 
-class LocationManager: NSObject, ObservableObject {
+protocol LocationManagerProtocol {
+    var coordinate: PassthroughSubject<CLLocationCoordinate2D?, Error> { get }
+    var authorizationStatus: PassthroughSubject<CLAuthorizationStatus, Error> { get }
+    
+    func startUpdatingLocation()
+    func stopUpdatingLocation()
+}
+
+class LocationManager: NSObject, LocationManagerProtocol, ObservableObject {
     private let locationManager = CLLocationManager()
     
     var coordinate = PassthroughSubject<CLLocationCoordinate2D?, Error>()

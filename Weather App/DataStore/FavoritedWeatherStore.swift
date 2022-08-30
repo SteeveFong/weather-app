@@ -8,7 +8,15 @@
 import Foundation
 import SwiftUI
 
-class FavoritedWeatherStore {
+protocol FavoritedWeatherStoreProtocol {
+    func load(completion: @escaping (Result<[Weather], Error>) -> Void)
+    func save(favorites: [Weather], completion: @escaping (Result<Int, Error>) -> Void)
+    func save(weather: Weather, completion: @escaping (Result<Int, Error>) -> Void)
+    func exists(weather: Weather, completion: @escaping (Result<Int, WeatherError>) -> Void)
+    func remove(atIndex index: Int, completion: @escaping (Result<Int, Error>) -> Void)
+}
+
+class FavoritedWeatherStore: FavoritedWeatherStoreProtocol {
     static let dataPath = "favorited_weather_store.data"
     private let store: Store<Weather>
     
