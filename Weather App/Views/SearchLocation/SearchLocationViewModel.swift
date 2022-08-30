@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 final class SearchLocationViewModel: ViewModelStateProtocol, ObservableObject {
-    @Inject private var apiManager: ApiManager
+    @Inject private var apiManager: ApiManagerProtocol
     
     @Published var state: ViewModelState = .none
     @Published var predictions: [Place]?

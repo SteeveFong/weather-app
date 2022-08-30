@@ -13,7 +13,7 @@ struct WeatherFavoriteList: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var weatherViewModel: WeatherViewModel
     
-    @Inject var favoritedWeatherStore: FavoritedWeatherStore
+    @Inject var favoritedWeatherStore: FavoritedWeatherStoreProtocol
     
     var body: some View {
         NavigationView {

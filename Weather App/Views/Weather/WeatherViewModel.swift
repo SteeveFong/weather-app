@@ -10,8 +10,8 @@ import Foundation
 import CoreLocation
 
 final class WeatherViewModel: ViewModelStateProtocol, ObservableObject {
-    @Inject private var apiManager: ApiManager
-    @Inject private var favoritedWeatherStore: FavoritedWeatherStore
+    @Inject private var apiManager: ApiManagerProtocol
+    @Inject private var favoritedWeatherStore: FavoritedWeatherStoreProtocol
     
     @Published var state: ViewModelState = .none
     @Published var currentWeather: Weather?

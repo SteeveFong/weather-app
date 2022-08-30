@@ -8,8 +8,14 @@
 import Foundation
 import SwiftUI
 
-struct WeatherDaily {
+struct WeatherDaily: Equatable {
     let date: Date
     let conditionIcon: Image?
     let temperature: Double
+}
+
+func ==(lhs: WeatherDaily, rhs: WeatherDaily) -> Bool {
+    return lhs.date == rhs.date
+    && lhs.conditionIcon == rhs.conditionIcon
+    && lhs.temperature == rhs.temperature
 }
